@@ -1,49 +1,6 @@
-#include "../includes/so_long.h"
+#include "so_long.h"
 
-int    cleanup_game(t_game *game)
-{
-    int i;
-
-    if (game->wall_img)
-        mlx_destroy_image(game->mlx, game->wall_img);
-    if (game->collectible_img)
-        mlx_destroy_image(game->mlx, game->collectible_img);
-    if (game->exit_img)
-        mlx_destroy_image(game->mlx, game->exit_img);
-    if (game->player_img)
-        mlx_destroy_image(game->mlx, game->player_img);
-    if (game->background_img)
-        mlx_destroy_image(game->mlx, game->background_img);
-    
-    if (game->map.grid)
-    {
-        i = 0;
-        while (i < game->map.height)
-        {
-            free(game->map.grid[i]);
-            i++;
-        }
-        free(game->map.grid);
-    }
-    
-    if (game->win)
-        mlx_destroy_window(game->mlx, game->win);
-# ifdef __linux__
-    if (game->mlx)
-        mlx_destroy_display(game->mlx);
-# endif
-    free(game->mlx);
-    exit(0);
-    return (0);
-}
-
-static void draw_tile(t_game *game, int x, int y, void *img)
-{
-    mlx_put_image_to_window(game->mlx, game->win, img, 
-        x * TILE_SIZE, y * TILE_SIZE);
-}
-
-int render_game(t_game *game)
+void render_game(t_game *game)
 {
     int i;
     int j;
@@ -54,27 +11,35 @@ int render_game(t_game *game)
         j = 0;
         while (j < game->map.width)
         {
-            draw_tile(game, j, i, game->background_img);
             if (game->map.grid[i][j] == '1')
-                draw_tile(game, j, i, game->wall_img);
+                mlx_put_image_to_window(game->mlx, game->win, game->wall_img, 
+                    j * TILE_SIZE, i * TILE_SIZE);
+            else if (game->map.grid[i][j] == '0')
+                mlx_put_image_to_window(game->mlx, game->win, game->floor_img, 
+                    j * TILE_SIZE, i * TILE_SIZE);
             else if (game->map.grid[i][j] == 'C')
-                draw_tile(game, j, i, game->collectible_img);
+                mlx_put_image_to_window(game->mlx, game->win, game->coin_img, 
+                    j * TILE_SIZE, i * TILE_SIZE);
             else if (game->map.grid[i][j] == 'E')
-                draw_tile(game, j, i, game->exit_img);
+                mlx_put_image_to_window(game->mlx, game->win, game->exit_img, 
+                    j * TILE_SIZE, i * TILE_SIZE);
             j++;
         }
         i++;
     }
-    draw_tile(game, game->player.x, game->player.y, game->player_img);
-    return (0);
+    mlx_put_image_to_window(game->mlx, game->win, game->player_img, 
+        game->map.player_x * TILE_SIZE, game->map.player_y * TILE_SIZE);
 }
 
-static int  can_move(t_game *game, int new_x, int new_y)
+static int can_move(t_game *game, int new_x, int new_y)
 {
-    if (new_x < 0 || new_y < 0 || 
-        new_x >= game->map.width || new_y >= game->map.height)
+    if (new_x < 0 || new_x >= game->map.width || 
+        new_y < 0 || new_y >= game->map.height)
         return (0);
     if (game->map.grid[new_y][new_x] == '1')
+        return (0);
+    if (game->map.grid[new_y][new_x] == 'E' && 
+        game->collected != game->map.collectibles)
         return (0);
     return (1);
 }
@@ -83,46 +48,78 @@ static void move_player(t_game *game, int new_x, int new_y)
 {
     if (game->map.grid[new_y][new_x] == 'C')
     {
-        game->player.collected++;
+        game->collected++;
         game->map.grid[new_y][new_x] = '0';
     }
-    else if (game->map.grid[new_y][new_x] == 'E')
+    else if (game->map.grid[new_y][new_x] == 'E' && 
+             game->collected == game->map.collectibles)
     {
-        if (game->player.collected == game->map.collectibles)
-        {
-            ft_printf("You won in %d moves!\n", game->player.moves + 1);
-            cleanup_game(game);
-        }
+        ft_printf("You won in %d moves!\n", game->moves + 1);
+        close_game(game);
     }
-    game->player.x = new_x;
-    game->player.y = new_y;
-    game->player.moves++;
-    ft_printf("Moves: %d\n", game->player.moves);
+    
+    game->map.grid[game->map.player_y][game->map.player_x] = '0';
+    game->map.player_x = new_x;
+    game->map.player_y = new_y;
+    game->map.grid[new_y][new_x] = 'P';
+    game->moves++;
+    ft_printf("Moves: %d\n", game->moves);
 }
 
-int handle_key(int keycode, t_game *game)
+int handle_keypress(int keycode, t_game *game)
 {
+    int new_x;
+    int new_y;
+
+    new_x = game->map.player_x;
+    new_y = game->map.player_y;
+    
     if (keycode == KEY_ESC)
-        cleanup_game(game);
-    else if (keycode == KEY_W || keycode == KEY_UP)
+        close_game(game);
+    else if (keycode == KEY_W)
+        new_y--;
+    else if (keycode == KEY_S)
+        new_y++;
+    else if (keycode == KEY_A)
+        new_x--;
+    else if (keycode == KEY_D)
+        new_x++;
+    
+    if (can_move(game, new_x, new_y))
     {
-        if (can_move(game, game->player.x, game->player.y - 1))
-            move_player(game, game->player.x, game->player.y - 1);
-    }
-    else if (keycode == KEY_S || keycode == KEY_DOWN)
-    {
-        if (can_move(game, game->player.x, game->player.y + 1))
-            move_player(game, game->player.x, game->player.y + 1);
-    }
-    else if (keycode == KEY_A || keycode == KEY_LEFT)
-    {
-        if (can_move(game, game->player.x - 1, game->player.y))
-            move_player(game, game->player.x - 1, game->player.y);
-    }
-    else if (keycode == KEY_D || keycode == KEY_RIGHT)
-    {
-        if (can_move(game, game->player.x + 1, game->player.y))
-            move_player(game, game->player.x + 1, game->player.y);
+        move_player(game, new_x, new_y);
+        render_game(game);
     }
     return (0);
+}
+
+int close_game(t_game *game)
+{
+    if (game->wall_img)
+        mlx_destroy_image(game->mlx, game->wall_img);
+    if (game->floor_img)
+        mlx_destroy_image(game->mlx, game->floor_img);
+    if (game->coin_img)
+        mlx_destroy_image(game->mlx, game->coin_img);
+    if (game->player_img)
+        mlx_destroy_image(game->mlx, game->player_img);
+    if (game->exit_img)
+        mlx_destroy_image(game->mlx, game->exit_img);
+    if (game->win)
+        mlx_destroy_window(game->mlx, game->win);
+    if (game->mlx)
+    {
+        mlx_destroy_display(game->mlx);
+        free(game->mlx);
+    }
+    free_map(game);
+    exit(0);
+}
+
+void error_exit(char *message, t_game *game)
+{
+    if (game)
+        close_game(game);
+    ft_printf("Error\n%s\n", message);
+    exit(1);
 } 
