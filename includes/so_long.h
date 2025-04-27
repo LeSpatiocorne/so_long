@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nidruon <nidruon@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:47:13 by nidruon           #+#    #+#             */
-/*   Updated: 2025/04/27 00:38:51 by ubuntu           ###   ########.fr       */
+/*   Updated: 2025/04/27 03:17:36 by nidruon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,45 +31,40 @@
 
 typedef struct s_map
 {
-    char    **grid;
-    int     width;
-    int     height;
-    int     collectibles;
-    int     player_x;
-    int     player_y;
-    int     exit_x;
-    int     exit_y;
-}   t_map;
+	char	**grid;
+	int		width;
+	int		height;
+	int		collectibles;
+	int		player_x;
+	int		player_y;
+	int		exit_x;
+	int		exit_y;
+}	t_map;
 
 typedef struct s_game
 {
-    void    *mlx;
-    void    *win;
-    t_map   map;
-    int     moves;
-    int     collected;
-    int     screen_width;
-    int     screen_height;
-    void    *wall_img;
-    void    *floor_img;
-    void    *coin_img;
-    void    *player_img;
-    void    *exit_img;
-}   t_game;
+	void	*mlx;
+	void	*win;
+	t_map	map;
+	int		moves;
+	int		collected;
+	int		screen_width;
+	int		screen_height;
+	void	*wall_img;
+	void	*floor_img;
+	void	*coin_img;
+	void	*player_img;
+	void	*exit_img;
+}	t_game;
 
-// Map functions
-int     parse_map(t_game *game, char *map_path);
-int     validate_map(t_game *game);
-void    free_map(t_game *game);
-
-// Game functions
-int     init_game(t_game *game);
-void    render_game(t_game *game);
-int     handle_keypress(int keycode, t_game *game);
-int     close_game(t_game *game);
-
-// Error handling
-int     so_error(char *message);
-void    error_exit(char *message, t_game *game);
+int		parse_map(t_game *game, char *map_path);
+int		validate_map(t_game *game);
+void	free_map(t_game *game);
+int		init_game(t_game *game);
+void	render_game(t_game *game);
+int		handle_keypress(int keycode, t_game *game);
+int		close_game(t_game *game);
+int		so_error(char *message);
+void	error_exit(char *message, t_game *game);
 
 #endif

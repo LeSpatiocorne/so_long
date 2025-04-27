@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   game.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nidruon <nidruon@student.42perpignan.fr    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/27 03:14:13 by nidruon           #+#    #+#             */
+/*   Updated: 2025/04/27 03:35:16 by nidruon          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
 void	render_game(t_game *game)
@@ -5,8 +17,8 @@ void	render_game(t_game *game)
 	int	i;
 	int	j;
 
-	i = 0;
-	while (i < game->map.height)
+	i = -1;
+	while (i++, i < game->map.height)
 	{
 		j = 0;
 		while (j < game->map.width)
@@ -24,21 +36,20 @@ void	render_game(t_game *game)
 					j * TILE_SIZE, i * TILE_SIZE);
 			j++;
 		}
-		i++;
 	}
-	mlx_put_image_to_window(game->mlx, game->win, game->player_img, 
+	mlx_put_image_to_window(game->mlx, game->win, game->player_img,
 		game->map.player_x * TILE_SIZE, game->map.player_y * TILE_SIZE);
 }
 
 static int	can_move(t_game *game, int new_x, int new_y)
 {
-	if (new_x < 0 || new_x >= game->map.width || 
-		new_y < 0 || new_y >= game->map.height)
+	if (new_x < 0 || new_x >= game->map.width 
+		|| new_y < 0 || new_y >= game->map.height)
 		return (0);
 	if (game->map.grid[new_y][new_x] == '1')
 		return (0);
-	if (game->map.grid[new_y][new_x] == 'E' && 
-		game->collected != game->map.collectibles)
+	if (game->map.grid[new_y][new_x] == 'E'
+		&& game->collected != game->map.collectibles)
 		return (0);
 	return (1);
 }
@@ -50,13 +61,12 @@ static void	move_player(t_game *game, int new_x, int new_y)
 		game->collected++;
 		game->map.grid[new_y][new_x] = '0';
 	}
-	else if (game->map.grid[new_y][new_x] == 'E' && 
-			 game->collected == game->map.collectibles)
+	else if (game->map.grid[new_y][new_x] == 'E'
+		&& game->collected == game->map.collectibles)
 	{
 		ft_printf("You won in %d moves!\n", game->moves + 1);
 		close_game(game);
 	}
-	
 	game->map.grid[game->map.player_y][game->map.player_x] = '0';
 	game->map.player_x = new_x;
 	game->map.player_y = new_y;
@@ -72,32 +82,17 @@ int	handle_keypress(int keycode, t_game *game)
 
 	new_x = game->map.player_x;
 	new_y = game->map.player_y;
-	
 	ft_printf("Key pressed: %d\n", keycode);
-	
 	if (keycode == KEY_ESC)
 		close_game(game);
 	else if (keycode == KEY_W || keycode == KEY_Z)
-	{
-		ft_printf("Moving up\n");
 		new_y--;
-	}
 	else if (keycode == KEY_S)
-	{
-		ft_printf("Moving down\n");
 		new_y++;
-	}
 	else if (keycode == KEY_A || keycode == KEY_Q)
-	{
-		ft_printf("Moving left\n");
 		new_x--;
-	}
 	else if (keycode == KEY_D)
-	{
-		ft_printf("Moving right\n");
 		new_x++;
-	}
-	
 	if (can_move(game, new_x, new_y))
 	{
 		move_player(game, new_x, new_y);
@@ -108,7 +103,7 @@ int	handle_keypress(int keycode, t_game *game)
 	return (0);
 }
 
-int close_game(t_game *game)
+int	close_game(t_game *game)
 {
 	if (game->wall_img)
 		mlx_destroy_image(game->mlx, game->wall_img);
@@ -131,10 +126,4 @@ int close_game(t_game *game)
 	exit(0);
 }
 
-void error_exit(char *message, t_game *game)
-{
-	if (game)
-		close_game(game);
-	ft_printf("Error\n%s\n", message);
-	exit(1);
-} 
+
