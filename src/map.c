@@ -3,6 +3,7 @@
 static int count_map_size(t_game *game, int fd)
 {
     char    *line;
+    char    *tmp;
     int     width;
     int     height;
 
@@ -16,6 +17,11 @@ static int count_map_size(t_game *game, int fd)
     }
     while (line)
     {
+        tmp = line;
+        while (*tmp && *tmp != '\n')
+            tmp++;
+        if (*tmp == '\n')
+            *tmp = '\0';
         if (height == 0)
             width = ft_strlen(line);
         else if (width != (int)ft_strlen(line))
@@ -65,6 +71,7 @@ static int allocate_map(t_game *game)
 static int fill_map(t_game *game, int fd)
 {
     char    *line;
+    char    *tmp;
     int     i;
     int     j;
 
@@ -72,6 +79,11 @@ static int fill_map(t_game *game, int fd)
     line = get_next_line(fd);
     while (line)
     {
+        tmp = line;
+        while (*tmp && *tmp != '\n')
+            tmp++;
+        if (*tmp == '\n')
+            *tmp = '\0';
         j = 0;
         while (line[j])
         {

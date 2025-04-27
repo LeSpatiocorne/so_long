@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:47:13 by nidruon           #+#    #+#             */
-/*   Updated: 2025/04/27 00:08:42 by ubuntu           ###   ########.fr       */
+/*   Updated: 2025/04/27 00:38:51 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,15 @@
 # include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
 
-# define TILE_SIZE 64
+# define TILE_SIZE 32
 # define KEY_ESC 65307
 # define KEY_W 119
 # define KEY_A 97
 # define KEY_S 115
 # define KEY_D 100
+# define KEY_Z 122
+# define KEY_Q 113
+
 
 typedef struct s_map
 {
@@ -66,6 +69,7 @@ int     handle_keypress(int keycode, t_game *game);
 int     close_game(t_game *game);
 
 // Error handling
+int     so_error(char *message);
 void    error_exit(char *message, t_game *game);
 
 #endif
