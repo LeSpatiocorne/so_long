@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nidruon <nidruon@student.42perpignan.fr    +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 03:19:30 by nidruon           #+#    #+#             */
-/*   Updated: 2025/04/27 03:34:58 by nidruon          ###   ########.fr       */
+/*   Updated: 2025/04/27 02:15:32 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,9 @@ int	main(int argc, char **argv)
 	if (!validate_map(&game))
 		return (1);
 	ft_printf("Map validated successfully\n");
+	if (!validate_path(&game))
+		return (1);
+	ft_printf("Path validated successfully\n");
 	if (!create_window(&game))
 		return (1);
 	if (!load_images(&game))

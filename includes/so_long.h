@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nidruon <nidruon@student.42perpignan.fr    +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:47:13 by nidruon           #+#    #+#             */
-/*   Updated: 2025/04/27 03:17:36 by nidruon          ###   ########.fr       */
+/*   Updated: 2025/04/27 01:43:53 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_game
 
 int		parse_map(t_game *game, char *map_path);
 int		validate_map(t_game *game);
+int		validate_path(t_game *game);
 void	free_map(t_game *game);
 int		init_game(t_game *game);
 void	render_game(t_game *game);
