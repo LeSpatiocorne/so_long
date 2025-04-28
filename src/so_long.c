@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 03:19:30 by nidruon           #+#    #+#             */
-/*   Updated: 2025/04/28 05:50:53 by ubuntu           ###   ########.fr       */
+/*   Updated: 2025/04/28 16:55:58 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,6 @@ int	main(int argc, char **argv)
 	setup_hooks(&game);
 	ft_printf("Entering MLX loop...\n");
 	mlx_loop(game.mlx);
+	cleanup_game(&game);
 	return (0);
 }
