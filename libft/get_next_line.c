@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:22:03 by nidruon           #+#    #+#             */
-/*   Updated: 2025/04/28 17:11:23 by ubuntu           ###   ########.fr       */
+/*   Updated: 2025/04/28 17:41:16 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ static char	*handle_read(int fd, char *buffer, char *temp)
 			free(buffer);
 			return (NULL);
 		}
+		free(buffer);
 		buffer = new_buffer;
 	}
 	free(temp);
@@ -100,7 +101,7 @@ static char	*read_file(int fd, char *buffer)
 	char	*temp;
 
 	if (!buffer)
-		buffer = ft_calloc(1, 1);
+		buffer = ft_calloc(1, sizeof(char));
 	if (!buffer)
 		return (NULL);
 	temp = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
@@ -109,7 +110,8 @@ static char	*read_file(int fd, char *buffer)
 		free(buffer);
 		return (NULL);
 	}
-	return (handle_read(fd, buffer, temp));
+	buffer = handle_read(fd, buffer, temp);
+	return (buffer);
 }
 
 char	*get_next_line(int fd)
@@ -117,7 +119,7 @@ char	*get_next_line(int fd)
 	static char	*buffer[4096];
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd >= 4096 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer[fd] = read_file(fd, buffer[fd]);
 	if (!buffer[fd])
@@ -130,7 +132,5 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	buffer[fd] = update_buffer(buffer[fd]);
-	if (!buffer[fd])
-		cleanup_gnl_buffer(fd);
 	return (line);
 }

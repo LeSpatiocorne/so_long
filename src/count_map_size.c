@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 04:49:22 by ubuntu            #+#    #+#             */
-/*   Updated: 2025/04/28 17:06:41 by ubuntu           ###   ########.fr       */
+/*   Updated: 2025/04/28 17:35:10 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,13 @@ int	count_map_size(t_game *game, int fd)
 		if (width == -1)
 		{
 			cleanup_gnl_buffer(fd);
-			return (free(line), 0);
+			free(line);
+			return (0);
 		}
 		height++;
 		free(line);
 		line = get_next_line(fd);
 	}
+	cleanup_gnl_buffer(fd);
 	return (check_map_dimensions(game, width, height));
 }

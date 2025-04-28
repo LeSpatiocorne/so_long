@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 05:20:59 by ubuntu            #+#    #+#             */
-/*   Updated: 2025/04/28 17:08:18 by ubuntu           ###   ########.fr       */
+/*   Updated: 2025/04/28 17:35:19 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,14 +97,16 @@ int	parse_map(t_game *game, char *map_path)
 	if (fd < 0 || !count_map_size(game, fd))
 	{
 		cleanup_gnl_buffer(fd);
-		return (close(fd), 0);
+		close(fd);
+		return (0);
 	}
 	close(fd);
 	fd = open_map(map_path);
 	if (fd < 0 || !allocate_map(game))
 	{
 		cleanup_gnl_buffer(fd);
-		return (close(fd), 0);
+		close(fd);
+		return (0);
 	}
 	if (!fill_map(game, fd))
 	{
