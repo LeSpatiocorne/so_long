@@ -1,0 +1,95 @@
+==85307== 
+==85307== HEAP SUMMARY:
+==85307==     in use at exit: 85,619 bytes in 48 blocks
+==85307==   total heap usage: 5,140 allocs, 5,092 frees, 361,321 bytes allocated
+==85307== 
+==85307== 1 bytes in 1 blocks are still reachable in loss record 1 of 45
+==85307==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==85307==    by 0x40518A: ft_strjoin (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x404FE8: handle_read (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x404C76: read_file (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x404B25: get_next_line (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x4034DF: fill_map (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x403253: parse_map (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x403B0A: setup_game (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x403A83: main (in /home/nidruon/Documents/so_long/so_long)
+==85307== 
+==85307== 1 bytes in 1 blocks are definitely lost in loss record 2 of 45
+==85307==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==85307==    by 0x4053F5: ft_calloc (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x404C16: read_file (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x404B25: get_next_line (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x402534: count_map_size (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x4031E6: parse_map (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x403B0A: setup_game (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x403A83: main (in /home/nidruon/Documents/so_long/so_long)
+==85307== 
+==85307== 1 bytes in 1 blocks are definitely lost in loss record 3 of 45
+==85307==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==85307==    by 0x40518A: ft_strjoin (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x404FE8: handle_read (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x404C76: read_file (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x404B25: get_next_line (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x4025E4: count_map_size (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x4031E6: parse_map (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x403B0A: setup_game (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x403A83: main (in /home/nidruon/Documents/so_long/so_long)
+==85307== 
+==85307== 1 bytes in 1 blocks are definitely lost in loss record 4 of 45
+==85307==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==85307==    by 0x4053F5: ft_calloc (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x404C16: read_file (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x404B25: get_next_line (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x4025E4: count_map_size (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x4031E6: parse_map (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x403B0A: setup_game (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x403A83: main (in /home/nidruon/Documents/so_long/so_long)
+==85307== 
+==85307== 1 bytes in 1 blocks are definitely lost in loss record 5 of 45
+==85307==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==85307==    by 0x4053F5: ft_calloc (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x404C16: read_file (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x404B25: get_next_line (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x4034DF: fill_map (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x403253: parse_map (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x403B0A: setup_game (in /home/nidruon/Documents/so_long/so_long)
+
+==85307== 
+==85307== 17 bytes in 2 blocks are definitely lost in loss record 11 of 45
+==85307==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==85307==    by 0x4053F5: ft_calloc (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x404EA8: update_buffer (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x404B9A: get_next_line (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x4025E4: count_map_size (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x4031E6: parse_map (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x403B0A: setup_game (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x403A83: main (in /home/nidruon/Documents/so_long/so_long)
+==85307== 
+==85307== 17 bytes in 2 blocks are definitely lost in loss record 12 of 45
+==85307==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==85307==    by 0x4053F5: ft_calloc (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x404EA8: update_buffer (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x404B9A: get_next_line (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x4034DF: fill_map (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x403253: parse_map (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x403B0A: setup_game (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x403A83: main (in /home/nidruon/Documents/so_long/so_long)
+
+==85307== 136 bytes in 1 blocks are definitely lost in loss record 34 of 45
+==85307==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==85307==    by 0x40561F: mlx_init (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x4039B2: init_mlx (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x404033: init_game (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x403AE8: setup_game (in /home/nidruon/Documents/so_long/so_long)
+==85307==    by 0x403A83: main (in /home/nidruon/Documents/so_long/so_long)
+==85307== 
+
+==85307== LEAK SUMMARY:
+==85307==    definitely lost: 174 bytes in 9 blocks
+==85307==    indirectly lost: 0 bytes in 0 blocks
+==85307==      possibly lost: 0 bytes in 0 blocks
+==85307==    still reachable: 85,445 bytes in 39 blocks
+==85307==         suppressed: 0 bytes in 0 blocks
+==85307== 
+==85307== For lists of detected and suppressed errors, rerun with: -s
+==85307== ERROR SUMMARY: 7 errors from 7 contexts (suppressed: 1 from 1)
