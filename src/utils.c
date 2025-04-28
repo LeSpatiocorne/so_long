@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 05:11:10 by ubuntu            #+#    #+#             */
-/*   Updated: 2025/04/28 17:49:22 by ubuntu           ###   ########.fr       */
+/*   Updated: 2025/04/28 18:02:10 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int	init_game(t_game *game)
 	game->map.exit_x = 0;
 	game->map.exit_y = 0;
 	game->map.collectibles = 0;
+	game->moves = 0;
+	game->collected = 0;
 	return (1);
 }
 
