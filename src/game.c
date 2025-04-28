@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 03:14:13 by nidruon           #+#    #+#             */
-/*   Updated: 2025/04/28 05:56:09 by ubuntu           ###   ########.fr       */
+/*   Updated: 2025/04/28 20:09:38 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	can_move(t_game *game, int new_x, int new_y)
 	return (1);
 }
 
-static void	move_player(t_game *game, int new_x, int new_y)
+static void	move_player(t_game *game, int new_x, int new_y, int keycode)
 {
 	if (game->map.grid[new_y][new_x] == 'C')
 	{
@@ -71,7 +71,9 @@ static void	move_player(t_game *game, int new_x, int new_y)
 	game->map.player_x = new_x;
 	game->map.player_y = new_y;
 	game->map.grid[new_y][new_x] = 'P';
-	game->moves++;
+	if (keycode == KEY_W || keycode == KEY_Z || keycode == KEY_S || 
+		keycode == KEY_A || keycode == KEY_Q || keycode == KEY_D)
+		game->moves++;
 	ft_printf("Moves: %d\n", game->moves);
 }
 
@@ -95,7 +97,7 @@ int	handle_keypress(int keycode, t_game *game)
 		new_x++;
 	if (can_move(game, new_x, new_y))
 	{
-		move_player(game, new_x, new_y);
+		move_player(game, new_x, new_y, keycode);
 		render_game(game);
 	}
 	else

@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: nidruon <nidruon@student.42perpignan.fr    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/04/28 18:37:09 by nidruon           #+#    #+#              #
-#    Updated: 2025/04/28 18:37:11 by nidruon          ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = so_long
 
 CC = cc
@@ -31,7 +19,8 @@ SRCS =	src/count_map_size.c \
 		src/path_validation.c \
 		src/so_long.c \
 		src/utils.c \
-
+		src/check_ber.c
+		
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 # Couleurs pour les messages

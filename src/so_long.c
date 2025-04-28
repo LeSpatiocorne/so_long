@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 03:19:30 by nidruon           #+#    #+#             */
-/*   Updated: 2025/04/28 18:25:30 by ubuntu           ###   ########.fr       */
+/*   Updated: 2025/04/28 20:14:00 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (so_error("Usage: ./so_long <map.ber>"));
+	if (!check_ber(argv[1]))
+		return (so_error("Invalid map file"));
 	ft_printf("Starting game with map: %s\n", argv[1]);
 	if (!setup_game(&game, argv[1]))
 		return (1);
