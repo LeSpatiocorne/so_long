@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:22:03 by nidruon           #+#    #+#             */
-/*   Updated: 2025/04/28 17:41:16 by ubuntu           ###   ########.fr       */
+/*   Updated: 2025/04/28 18:28:57 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,19 +76,11 @@ static char	*handle_read(int fd, char *buffer, char *temp)
 	{
 		bytes_read = read(fd, temp, BUFFER_SIZE);
 		if (bytes_read == -1)
-		{
-			free(temp);
-			free(buffer);
-			return (NULL);
-		}
+			return (free(temp), free(buffer), NULL);
 		temp[bytes_read] = '\0';
 		new_buffer = ft_strjoin(buffer, temp);
 		if (!new_buffer)
-		{
-			free(temp);
-			free(buffer);
-			return (NULL);
-		}
+			return (free(temp), free(buffer), NULL);
 		free(buffer);
 		buffer = new_buffer;
 	}

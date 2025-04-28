@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:47:13 by nidruon           #+#    #+#             */
-/*   Updated: 2025/04/28 06:01:20 by ubuntu           ###   ########.fr       */
+/*   Updated: 2025/04/28 18:25:50 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,8 @@ int		close_game(t_game *game);
 int		so_error(char *message);
 void	error_exit(char *message, t_game *game);
 void	flood_fill(t_game *game, t_flood *flood, int x, int y);
+int		allocate_map(t_game *game);
+int		fill_map(t_game *game, int fd);
+int		init_game_resources(t_game *game);
 
 #endif

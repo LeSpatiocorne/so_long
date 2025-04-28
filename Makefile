@@ -12,7 +12,9 @@ SRCS =	src/count_map_size.c \
 		src/error.c \
 		src/flood_fill.c \
 		src/game.c \
+		src/game_utils.c \
 		src/map.c \
+		src/map_utils.c \
 		src/parse_map.c \
 		src/path_validation.c \
 		src/so_long.c \
