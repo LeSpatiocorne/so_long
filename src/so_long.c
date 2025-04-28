@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 03:19:30 by nidruon           #+#    #+#             */
-/*   Updated: 2025/04/28 17:33:37 by ubuntu           ###   ########.fr       */
+/*   Updated: 2025/04/28 17:51:08 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,21 +71,39 @@ static int	setup_game(t_game *game, char *map_path)
 	if (!init_game(game))
 		return (0);
 	if (!parse_map(game, map_path))
+	{
+		free_map(game);
 		return (0);
+	}
 	ft_printf("Map parsed successfully. Dimensions: %dx%d\n",
 		game->map.width, game->map.height);
 	if (!validate_map(game))
+	{
+		free_map(game);
 		return (0);
+	}
 	ft_printf("Map validated successfully\n");
 	if (!validate_path(game))
+	{
+		free_map(game);
 		return (0);
+	}
 	ft_printf("Path validated successfully\n");
 	if (!init_mlx(game))
+	{
+		free_map(game);
 		return (0);
+	}
 	if (!create_window(game))
+	{
+		free_map(game);
 		return (0);
+	}
 	if (!load_images(game))
+	{
+		free_map(game);
 		return (0);
+	}
 	render_game(game);
 	ft_printf("Game rendered. Setting up hooks...\n");
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 05:11:10 by ubuntu            #+#    #+#             */
-/*   Updated: 2025/04/28 17:04:54 by ubuntu           ###   ########.fr       */
+/*   Updated: 2025/04/28 17:49:22 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,32 @@ void	free_map(t_game *game)
 		i = 0;
 		while (i < game->map.height)
 		{
-			free(game->map.grid[i]);
+			if (game->map.grid[i])
+				free(game->map.grid[i]);
 			i++;
 		}
 		free(game->map.grid);
+		game->map.grid = NULL;
 	}
 }
 
 int	init_game(t_game *game)
 {
-	ft_printf("Initializing game...\n");
-	ft_bzero(game, sizeof(t_game));
-	game->moves = 0;
-	game->collected = 0;
+	game->mlx = NULL;
+	game->win = NULL;
+	game->wall_img = NULL;
+	game->floor_img = NULL;
+	game->coin_img = NULL;
+	game->player_img = NULL;
+	game->exit_img = NULL;
+	game->map.grid = NULL;
+	game->map.width = 0;
+	game->map.height = 0;
+	game->map.player_x = 0;
+	game->map.player_y = 0;
+	game->map.exit_x = 0;
+	game->map.exit_y = 0;
+	game->map.collectibles = 0;
 	return (1);
 }
 

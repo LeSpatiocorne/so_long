@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 05:20:59 by ubuntu            #+#    #+#             */
-/*   Updated: 2025/04/28 17:35:19 by ubuntu           ###   ########.fr       */
+/*   Updated: 2025/04/28 17:49:11 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static int	allocate_map(t_game *game)
 			while (--i >= 0)
 				free(game->map.grid[i]);
 			free(game->map.grid);
+			game->map.grid = NULL;
 			return (0);
 		}
 		i++;
@@ -102,7 +103,13 @@ int	parse_map(t_game *game, char *map_path)
 	}
 	close(fd);
 	fd = open_map(map_path);
-	if (fd < 0 || !allocate_map(game))
+	if (fd < 0)
+	{
+		cleanup_gnl_buffer(fd);
+		close(fd);
+		return (0);
+	}
+	if (!allocate_map(game))
 	{
 		cleanup_gnl_buffer(fd);
 		close(fd);

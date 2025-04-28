@@ -16,7 +16,7 @@ SRCS =	src/count_map_size.c \
 		src/parse_map.c \
 		src/path_validation.c \
 		src/so_long.c \
-		src/utils.c
+		src/utils.c \
 
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
