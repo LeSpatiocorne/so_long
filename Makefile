@@ -1,7 +1,7 @@
 NAME = so_long
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 MLX_FLAGS = -L./minilibx-linux -lmlx -lXext -lX11
 
 SRC_DIR = src

@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 05:11:10 by ubuntu            #+#    #+#             */
-/*   Updated: 2025/04/28 05:55:58 by ubuntu           ###   ########.fr       */
+/*   Updated: 2025/04/28 17:04:54 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	cleanup_game(t_game *game)
 {
+	if (game->win)
+		mlx_destroy_window(game->mlx, game->win);
 	if (game->wall_img)
 		mlx_destroy_image(game->mlx, game->wall_img);
 	if (game->floor_img)
@@ -24,8 +26,6 @@ void	cleanup_game(t_game *game)
 		mlx_destroy_image(game->mlx, game->player_img);
 	if (game->exit_img)
 		mlx_destroy_image(game->mlx, game->exit_img);
-	if (game->win)
-		mlx_destroy_window(game->mlx, game->win);
 	if (game->mlx)
 	{
 		mlx_destroy_display(game->mlx);
@@ -54,8 +54,6 @@ int	init_game(t_game *game)
 {
 	ft_printf("Initializing game...\n");
 	ft_bzero(game, sizeof(t_game));
-	if (!init_mlx(game))
-		return (0);
 	game->moves = 0;
 	game->collected = 0;
 	return (1);

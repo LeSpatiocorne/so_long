@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 04:49:22 by ubuntu            #+#    #+#             */
-/*   Updated: 2025/04/28 04:50:04 by ubuntu           ###   ########.fr       */
+/*   Updated: 2025/04/28 17:06:41 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,20 @@ int	count_map_size(t_game *game, int fd)
 	width = 0;
 	line = get_next_line(fd);
 	if (!line)
+	{
+		cleanup_gnl_buffer(fd);
 		return (ft_printf("Error: Empty map file\n"), 0);
+	}
 	while (line)
 	{
 		if (ft_strchr(line, '\n'))
 			*ft_strchr(line, '\n') = '\0';
 		width = check_line_width(line, width, height);
 		if (width == -1)
+		{
+			cleanup_gnl_buffer(fd);
 			return (free(line), 0);
+		}
 		height++;
 		free(line);
 		line = get_next_line(fd);

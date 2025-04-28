@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:22:03 by nidruon           #+#    #+#             */
-/*   Updated: 2025/04/28 06:11:38 by ubuntu           ###   ########.fr       */
+/*   Updated: 2025/04/28 17:11:23 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static char	*update_buffer(char *buffer)
 		free(buffer);
 		return (NULL);
 	}
-	new_buffer = ft_calloc(ft_strlen(buffer) - i + 1, sizeof(char));
+	new_buffer = ft_calloc(ft_strlen(buffer) - i, sizeof(char));
 	if (!new_buffer)
 	{
 		free(buffer);
@@ -68,7 +68,8 @@ static char	*update_buffer(char *buffer)
 
 static char	*handle_read(int fd, char *buffer, char *temp)
 {
-	int	bytes_read;
+	int		bytes_read;
+	char	*new_buffer;
 
 	bytes_read = 1;
 	while (bytes_read > 0 && !ft_strchr(buffer, '\n'))
@@ -81,12 +82,14 @@ static char	*handle_read(int fd, char *buffer, char *temp)
 			return (NULL);
 		}
 		temp[bytes_read] = '\0';
-		buffer = ft_strjoin(buffer, temp);
-		if (!buffer)
+		new_buffer = ft_strjoin(buffer, temp);
+		if (!new_buffer)
 		{
 			free(temp);
+			free(buffer);
 			return (NULL);
 		}
+		buffer = new_buffer;
 	}
 	free(temp);
 	return (buffer);
@@ -122,11 +125,12 @@ char	*get_next_line(int fd)
 	line = get_line(buffer[fd]);
 	if (!line)
 	{
-		cleanup_gnl_buffer(fd);
+		free(buffer[fd]);
+		buffer[fd] = NULL;
 		return (NULL);
 	}
 	buffer[fd] = update_buffer(buffer[fd]);
-	if (!buffer[fd] && line)
+	if (!buffer[fd])
 		cleanup_gnl_buffer(fd);
 	return (line);
 }
