@@ -54,7 +54,8 @@ ft_memcmp.c \
 		ft_print_str.c \
 		ft_print_unsigned.c \
 		get_next_line.c \
-		ft_putnbr_base_fd.c
+		ft_putnbr_base_fd.c \
+		cleanup_gnl.c
 
 OBJS = $(SRCS:.c=.o)
 

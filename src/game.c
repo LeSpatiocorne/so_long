@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nidruon <nidruon@student.42perpignan.fr    +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 03:14:13 by nidruon           #+#    #+#             */
-/*   Updated: 2025/04/27 03:35:16 by nidruon          ###   ########.fr       */
+/*   Updated: 2025/04/28 05:56:09 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@ void	render_game(t_game *game)
 		j = 0;
 		while (j < game->map.width)
 		{
-			mlx_put_image_to_window(game->mlx, game->win, game->floor_img, 
+			mlx_put_image_to_window(game->mlx, game->win, game->floor_img,
 				j * TILE_SIZE, i * TILE_SIZE);
 			if (game->map.grid[i][j] == '1')
-				mlx_put_image_to_window(game->mlx, game->win, game->wall_img, 
+				mlx_put_image_to_window(game->mlx, game->win, game->wall_img,
 					j * TILE_SIZE, i * TILE_SIZE);
 			else if (game->map.grid[i][j] == 'C')
-				mlx_put_image_to_window(game->mlx, game->win, game->coin_img, 
+				mlx_put_image_to_window(game->mlx, game->win, game->coin_img,
 					j * TILE_SIZE, i * TILE_SIZE);
 			else if (game->map.grid[i][j] == 'E')
-				mlx_put_image_to_window(game->mlx, game->win, game->exit_img, 
+				mlx_put_image_to_window(game->mlx, game->win, game->exit_img,
 					j * TILE_SIZE, i * TILE_SIZE);
 			j++;
 		}
@@ -43,7 +43,7 @@ void	render_game(t_game *game)
 
 static int	can_move(t_game *game, int new_x, int new_y)
 {
-	if (new_x < 0 || new_x >= game->map.width 
+	if (new_x < 0 || new_x >= game->map.width
 		|| new_y < 0 || new_y >= game->map.height)
 		return (0);
 	if (game->map.grid[new_y][new_x] == '1')
@@ -105,25 +105,7 @@ int	handle_keypress(int keycode, t_game *game)
 
 int	close_game(t_game *game)
 {
-	if (game->wall_img)
-		mlx_destroy_image(game->mlx, game->wall_img);
-	if (game->floor_img)
-		mlx_destroy_image(game->mlx, game->floor_img);
-	if (game->coin_img)
-		mlx_destroy_image(game->mlx, game->coin_img);
-	if (game->player_img)
-		mlx_destroy_image(game->mlx, game->player_img);
-	if (game->exit_img)
-		mlx_destroy_image(game->mlx, game->exit_img);
-	if (game->win)
-		mlx_destroy_window(game->mlx, game->win);
-	if (game->mlx)
-	{
-		mlx_destroy_display(game->mlx);
-		free(game->mlx);
-	}
-	free_map(game);
+	cleanup_game(game);
 	exit(0);
+	return (0);
 }
-
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nidruon <nidruon@student.42perpignan.fr    +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 18:19:26 by nidruon           #+#    #+#             */
-/*   Updated: 2025/04/24 18:23:49 by nidruon          ###   ########.fr       */
+/*   Updated: 2025/04/28 06:03:31 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,5 @@ int		ft_isprint(int c);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+void	cleanup_gnl_buffer(int fd);
 #endif

@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:47:13 by nidruon           #+#    #+#             */
-/*   Updated: 2025/04/27 01:43:53 by ubuntu           ###   ########.fr       */
+/*   Updated: 2025/04/28 06:01:20 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 # define KEY_D 100
 # define KEY_Z 122
 # define KEY_Q 113
-
 
 typedef struct s_map
 {
@@ -57,15 +56,26 @@ typedef struct s_game
 	void	*exit_img;
 }	t_game;
 
+typedef struct s_flood
+{
+	int	**visited;
+	int	ignore_exit;
+}	t_flood;
+
 int		parse_map(t_game *game, char *map_path);
 int		validate_map(t_game *game);
 int		validate_path(t_game *game);
 void	free_map(t_game *game);
+void	cleanup_game(t_game *game);
+int		count_map_size(t_game *game, int fd);
 int		init_game(t_game *game);
+int		init_mlx(t_game *game);
+void	setup_hooks(t_game *game);
 void	render_game(t_game *game);
 int		handle_keypress(int keycode, t_game *game);
 int		close_game(t_game *game);
 int		so_error(char *message);
 void	error_exit(char *message, t_game *game);
+void	flood_fill(t_game *game, t_flood *flood, int x, int y);
 
 #endif

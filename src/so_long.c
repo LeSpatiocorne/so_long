@@ -6,13 +6,13 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 03:19:30 by nidruon           #+#    #+#             */
-/*   Updated: 2025/04/27 02:15:32 by ubuntu           ###   ########.fr       */
+/*   Updated: 2025/04/28 05:50:53 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static int	init_mlx(t_game *game)
+int	init_mlx(t_game *game)
 {
 	game->mlx = mlx_init();
 	if (!game->mlx)
@@ -59,7 +59,6 @@ static int	load_images(t_game *game)
 			"assets/player.xpm", &img_width, &img_height);
 	game->exit_img = mlx_xpm_file_to_image(game->mlx,
 			"assets/exit.xpm", &img_width, &img_height);
-
 	if (!game->wall_img || !game->floor_img || !game->coin_img
 		|| !game->player_img || !game->exit_img)
 		return (so_error("Failed to load images"));
@@ -67,15 +66,29 @@ static int	load_images(t_game *game)
 	return (1);
 }
 
-int	init_game(t_game *game)
+static int	setup_game(t_game *game, char *map_path)
 {
-	ft_printf("Initializing game...\n");
-	ft_bzero(game, sizeof(t_game));
+	if (!init_game(game))
+		return (1);
+	if (!parse_map(game, map_path))
+		return (1);
+	ft_printf("Map parsed successfully. Dimensions: %dx%d\n",
+		game->map.width, game->map.height);
+	if (!validate_map(game))
+		return (1);
+	ft_printf("Map validated successfully\n");
+	if (!validate_path(game))
+		return (1);
+	ft_printf("Path validated successfully\n");
 	if (!init_mlx(game))
-		return (0);
-	game->moves = 0;
-	game->collected = 0;
-	return (1);
+		return (1);
+	if (!create_window(game))
+		return (1);
+	if (!load_images(game))
+		return (1);
+	render_game(game);
+	ft_printf("Game rendered. Setting up hooks...\n");
+	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -85,26 +98,9 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (so_error("Usage: ./so_long <map.ber>"));
 	ft_printf("Starting game with map: %s\n", argv[1]);
-	if (!init_game(&game))
+	if (setup_game(&game, argv[1]))
 		return (1);
-	if (!parse_map(&game, argv[1]))
-		return (1);
-	ft_printf("Map parsed successfully. Dimensions: %dx%d\n",
-		game.map.width, game.map.height);
-	if (!validate_map(&game))
-		return (1);
-	ft_printf("Map validated successfully\n");
-	if (!validate_path(&game))
-		return (1);
-	ft_printf("Path validated successfully\n");
-	if (!create_window(&game))
-		return (1);
-	if (!load_images(&game))
-		return (1);
-	render_game(&game);
-	ft_printf("Game rendered. Setting up hooks...\n");
-	mlx_hook(game.win, 2, 1L<<0, handle_keypress, &game);
-	mlx_hook(game.win, 17, 0, close_game, &game);
+	setup_hooks(&game);
 	ft_printf("Entering MLX loop...\n");
 	mlx_loop(game.mlx);
 	return (0);

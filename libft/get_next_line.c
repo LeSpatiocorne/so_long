@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nidruon <nidruon@student.42perpignan.fr    +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:22:03 by nidruon           #+#    #+#             */
-/*   Updated: 2025/04/24 18:11:31 by nidruon          ###   ########.fr       */
+/*   Updated: 2025/04/28 06:11:38 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,11 @@ static char	*handle_read(int fd, char *buffer, char *temp)
 		}
 		temp[bytes_read] = '\0';
 		buffer = ft_strjoin(buffer, temp);
+		if (!buffer)
+		{
+			free(temp);
+			return (NULL);
+		}
 	}
 	free(temp);
 	return (buffer);
@@ -117,34 +122,11 @@ char	*get_next_line(int fd)
 	line = get_line(buffer[fd]);
 	if (!line)
 	{
-		free(buffer[fd]);
-		buffer[fd] = NULL;
+		cleanup_gnl_buffer(fd);
 		return (NULL);
 	}
 	buffer[fd] = update_buffer(buffer[fd]);
+	if (!buffer[fd] && line)
+		cleanup_gnl_buffer(fd);
 	return (line);
 }
-/*
-#include <fcntl.h>
-#include <stdio.h>
-
-int	main(void)
-{
-	int		fd;
-	char	*line;
-
-	fd = open("test", O_RDONLY);
-	if (fd == -1)
-	{
-		printf("Error opening file\n");
-		return (1);
-	}
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		printf("%s", line);
-		free(line);
-	}
-	close(fd);
-	return (0);
-}
-*/
